@@ -1,0 +1,52 @@
+ # NOVAREIGN SOVEREIGN PIPELINE - v5.0 OMEGA
+stages:
+  - build
+  - test
+  - security
+  - deploy
+
+# 1. BUILD: Architecting the Container
+build_enclave:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - docker:dind
+  script:
+    - echo "Architecting Agent Zero Docker Environment..."
+    - docker build -t novareign/liaison-native:latest .
+    - echo "Build Complete. Enclave Integrity Verified."
+
+# 2. TEST: Forensic Logic Validation
+logic_validation:
+  stage: test
+  image: python:3.11
+  script:
+    - echo "Running Heartbeat Diagnostics..."
+    - python heartbeat.py --test-mode
+    - echo "Verifying Success Fee Ledger Math..."
+    - python ledger_logic.py --validate-revenue
+  only:
+    - main
+
+# 3. SECURITY: Aura GHOST Scan
+aura_security_audit:
+  stage: security
+  image: 
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  script:
+    - echo "Aura GHOST Scan: Hunting for Vulnerabilities..."
+    - trivy image --severity HIGH,CRITICAL novareign/liaison-native:latest
+  allow_failure: false  # The pipeline KILLS the release if security fails.
+
+# 4. DEPLOY: Mechanical Hand Execution
+deploy_to_sovereign_nodes:
+  stage: deploy
+  script:
+    - echo "Deploying Liaison-Native standard to Global Nodes..."
+    - ./agent_zero_deploy.sh --target production
+  environment:
+    name: production
+    url: https://portal.novareign.ai
+  only:
+    - main

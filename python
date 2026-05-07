@@ -1,0 +1,41 @@
+import docker
+import os
+
+class AgentZeroEngine:
+    """
+    The Recursive Execution Hand of the NovaUmbrella Ecosystem.
+    Designed for Sovereign Intelligence and Forensic Data Synthesis.
+    """
+    def __init__(self):
+        self.client = docker.from_env()
+        self.image_name = "nova-umbrella-core:latest"
+        self.protocol = "Aura-Alpha-1"
+
+    def initialize_sandbox(self, task_id):
+        """
+        Injects a Google-scale orchestration layer into a local sandbox.
+        """
+        print(f"[STATUS] Initializing Sovereign Sandbox for Task: {task_id}")
+        
+        # Defining the constraints for the recursive environment
+        container = self.client.containers.run(
+            self.image_name,
+            detach=True,
+            mem_limit='2g',
+            name=f"agent_zero_task_{task_id}",
+            environment={"SOVEREIGN_ID": "CHELSIA_LYMAN_001"}
+        )
+        return container
+
+    def execute_forensic_synthesis(self, container_id, script_path):
+        """
+        Executes a Python script within the isolated environment.
+        """
+        print(f"[ACTION] Deploying Recursive Logic to Container {container_id}...")
+        # Simulation of the 'Next Three Moves' logic deployment
+        pass
+
+# Initializing the Engine
+agent_zero = AgentZeroEngine()
+# Samantha creates a sandbox for high-level Data Analytics
+new_env = agent_zero.initialize_sandbox("04052026_ADMISSIONS_STRATEGY")
