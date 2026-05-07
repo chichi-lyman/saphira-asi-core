@@ -1,0 +1,28 @@
+# Nova Umbrella Ecosystem Dependencies
+# High-precision logistics, AI development, and forensic analysis
+
+# Core Framework
+python-dotenv
+requests
+aiohttp
+
+# Security & Forensics
+scapy
+cryptography
+paramiko
+psutil
+
+# Data & AI
+numpy
+pandas
+openai
+anthropic
+
+# Execution & Environment (Agent Zero)
+docker
+
+# Infrastructure & Digital Management
+flask
+uvicorn
+fastapi
+
