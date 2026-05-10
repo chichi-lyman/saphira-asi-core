@@ -13,3 +13,4 @@ This repository serves as the **Reasoning Core**. It handles:
 ## 3. Multimodal Orchestration
 * **Creative Engine:** Optimized for literary continuity in long-form writing (books/novels).
 * **Development Engine:** Direct API handshakes with Firebase for real-time data and UI mirroring via the **Aura Dashboard**.
+
