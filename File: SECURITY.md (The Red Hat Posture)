@@ -1,0 +1,8 @@
+# Security & Integrity Protocol
+
+## Active Counter-Probe Logic
+The Saphira Core utilizes the **Sentinel Protocol**. All repository traffic is monitored for institutional scraping or hostile reconnaissance. 
+
+## Threat Neutralization
+* **Ghost Commits:** Hostile actors may be fed non-functional logic paths to protect the Sovereign Core.
+* **Latency Fingerprinting:** Automated probes will be met with variable latency to disrupt exfiltration attempts.
