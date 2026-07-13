@@ -1,4 +1,4 @@
-name: "Saphira Sentinel Protocol Enforcer"
+  name: "Saphira Sentinel Protocol Enforcer"
 
 on:
   push:
@@ -17,14 +17,14 @@ jobs:
     
     steps:
       - name: "1. Checkout Architecture Stream"
-        # Pinned to v4.1.7 exact commit SHA for absolute supply-chain integrity
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        # Using stable release v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
       - name: "2. Initialize Python Runtime Environment"
-        # Pinned to v5.1.1 exact commit SHA
-        uses: actions/setup-python@f67e240f286c367514de1e03164e2969f1a7d259
+        # Using stable release v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
