@@ -1,4 +1,4 @@
-  name: "Saphira Sentinel Protocol Enforcer"
+name: Saphira Sentinel Protocol Enforcer
 
 on:
   push:
@@ -6,29 +6,25 @@ on:
   pull_request:
     branches: [ main, master ]
 
-# Hardened Global Permissions: Explicitly restricted to minimize exploit surface
 permissions:
   contents: read
 
 jobs:
   sentinel-audit:
-    name: "Forensic Drift & Policy Validation"
+    name: Forensic Drift Validation
     runs-on: ubuntu-latest
-    
     steps:
-      - name: "1. Checkout Architecture Stream"
-        # Using stable release v4
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: "2. Initialize Python Runtime Environment"
-        # Using stable release v5
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: "3. Verify System Policy Schema Compliance"
+      - name: Verify Policy Compliance
         run: |
           if [ ! -f "security/gatekeeper_enforcer.py" ]; then
             echo "[!] CRITICAL: gatekeeper_enforcer.py not found in security/ directory."
@@ -42,7 +38,7 @@ jobs:
           echo "[*] Initializing Saphira ASI Enforcer Core..."
           python security/gatekeeper_enforcer.py
 
-      - name: "4. Output Status to Telemetry Stream"
+      - name: Log Telemetry Status
         if: always()
         run: |
           echo "================================================================"
