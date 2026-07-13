@@ -1,0 +1,52 @@
+name: "Saphira Sentinel Protocol Enforcer"
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# Hardened Global Permissions: Explicitly restricted to minimize exploit surface
+permissions:
+  contents: read
+
+jobs:
+  sentinel-audit:
+    name: "Forensic Drift & Policy Validation"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "1. Checkout Architecture Stream"
+        # Pinned to v4.1.7 exact commit SHA for absolute supply-chain integrity
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          fetch-depth: 2
+
+      - name: "2. Initialize Python Runtime Environment"
+        # Pinned to v5.1.1 exact commit SHA
+        uses: actions/setup-python@f67e240f286c367514de1e03164e2969f1a7d259
+        with:
+          python-version: '3.11'
+
+      - name: "3. Verify System Policy Schema Compliance"
+        run: |
+          if [ ! -f "security/gatekeeper_enforcer.py" ]; then
+            echo "[!] CRITICAL: gatekeeper_enforcer.py not found in security/ directory."
+            exit 1
+          fi
+          if [ ! -f "security/nova_umbrella.te" ]; then
+            echo "[!] CRITICAL: Master policy file nova_umbrella.te is missing."
+            exit 1
+          fi
+          
+          echo "[*] Initializing Saphira ASI Enforcer Core..."
+          python security/gatekeeper_enforcer.py
+
+      - name: "4. Output Status to Telemetry Stream"
+        if: always()
+        run: |
+          echo "================================================================"
+          echo "  SAPHIRA ASI SYSTEM AUDIT LOG"
+          echo "  Architect: Chelsea Megan Woods | Woods Legacies"
+          echo "  Workflow Execution Status: ${{ job.status }}"
+          echo "================================================================"
