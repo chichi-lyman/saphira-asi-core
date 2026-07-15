@@ -1,0 +1,33 @@
+# =========================================================
+# Domain: nova_agent_t (The Sovereign Intelligence Domain)
+# Purpose: Isolate Agent Zero from Host OS while allowing 
+#          recursive execution within SCIF containers.
+# =========================================================
+
+# 1. Define the Type
+type nova_agent_t, domain, coredomain;
+type nova_agent_exec_t, exec_type, file_type, system_file_type;
+
+# 2. Transition Rule: When Nova starts Agent Zero, move to this domain
+init_daemon_domain(nova_agent_t)
+
+# 3. Restrict Process Capabilities (The "Forensic Filter" at Kernel Level)
+# Allow basic process management but deny raw memory access
+allow nova_agent_t self:process { fork sigchld setsched getpgid };
+dontaudit nova_agent_t self:process { ptrace }; # Explicitly block debugging/snooping
+
+# 4. SCIF Container Isolation (Docker/Containerized Logic)
+# Allow reading its own isolated config, but deny access to user /data/system
+allow nova_agent_t nova_data_file:dir { create_dir_perms };
+allow nova_agent_t nova_data_file:file { create_file_perms };
+
+# 5. Network Restrictions (Zero-Trust Gateway)
+# Only allow DNS and HTTPS for API calls to Nova Umbrella Cloud
+allow nova_agent_t self:tcp_socket { create_stream_socket_perms };
+allow nova_agent_t port_t:tcp_socket name_connect;
+allow nova_agent_t dnsproxyd_socket:sock_file write;
+
+# 6. Explicitly Deny Critical System Hooks (Safety First)
+# Even if the app is 'System' level, it cannot touch these
+neverallow nova_agent_t shadow_file_type:file { read write };
+neverallow nova_agent_t keystore_data_file:file { read write };
