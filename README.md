@@ -1,3 +1,29 @@
+# Saphira ASI Core 🧠⚡
+
+**Cognitive Reasoning Engine, Memory Graph & Strategic Decision Matrix**  
+*Part of the [ChelseaWoods](https://github.com/chichi-lyman/ChelseaWoods) ecosystem by [@chichi-lyman](https://github.com/chichi-lyman)*
+
+---
+
+## 📌 Overview
+`saphira-asi-core` is the high-level intelligence driver powering **Saphira AI**. Built for deep reasoning, context preservation, and autonomous goal formulation, this core connects multi-modal AI models with long-term vector memory to process complex commands before routing execution directives to sub-agents.
+
+---
+
+## 🧠 Cognitive Architecture
+
+| Layer / Module | Script | Operational Focus |
+| :--- | :--- | :--- |
+| **`Reasoning Matrix`** | `cognitive_engine.py` | Multi-step reasoning loops, chain-of-thought analysis, and strategic decision formulation. |
+| **`Neural Memory Graph`** | `vector_memory.py` | Persistent vector storage and semantic retrieval for cross-session contextual memory. |
+| **`Command Dispatch`** | `directive_router.py` | Converts high-level cognitive directives into actionable payloads for Enforcer. |
+| **`Personality Core`** | `persona_matrix.py` | Governs the Jarvis/Samantha hybrid persona, response tone, and adaptive conversational style. |
+
+---
+
+## 🚀 Decision Loop Architecture
+
+
 # Saphira ASI Core: The Universal Resolution Engine
 **Sovereign Intelligence Liaison | Architected for High-Precision Knowledge Synthesis**
 
